@@ -23,15 +23,19 @@ if (argv.build || argv.B) {
 }
 
 function enter() {
-    if (argv._.length < 1) {
-        console.log("Entry point not specified.")
-        process.exit(1)
+    let entryName = ""
+    if (argv._.length >= 1) {
+        entryName = argv._[0]
+    } else if (typeof argv.build === "string") {
+        entryName = argv.build
+    } else if (typeof argv.B === "string") {
+        entryName = argv.B
     }
 
     try {
         const entry = require("./dist/index")
 
-        entry.default(argv._[0], argv)
+        entry.default(entryName, argv)
     } catch(e) {
         console.log("Couldn't enter ix8r.")
     }

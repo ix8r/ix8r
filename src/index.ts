@@ -1,6 +1,7 @@
-import { getScaleChord } from "./notes";
+import { defineEntry, enter } from "./util/entry"
 
-console.log(getScaleChord(
-    { root: "A#", mode: "lydian" },
-    0
-))
+defineEntry("test", (argv) => console.log("Test!"))
+
+export default function ix8r(entry: string, argv: any) {
+    enter(entry, argv)
+}

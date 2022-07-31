@@ -110,3 +110,18 @@ export function getScalesFromNotes(notes: Note[]) {
         c => c.scale
     )
 }
+
+type PatternNoteItem = {
+    type: "note",
+    note: Note
+}
+
+type PatternChordItem = {
+    type: "chord",
+    chord: Chord
+}
+
+export type PatternItem = {
+    start: number,
+    length: number
+} & (PatternNoteItem | PatternChordItem)

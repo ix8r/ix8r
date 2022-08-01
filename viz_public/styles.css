@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
+body {
+  font-family: "Inter";
+}
+
+table.piano-roll {
+  background: #e4e4e4;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+table.piano-roll td, table.piano-roll th {
+  min-width: 32px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+}
+table.piano-roll th {
+  font-weight: 500;
+  font-size: 10pt;
+  text-align: left;
+}
+table.piano-roll tbody {
+  background: #f7f7f7;
+}
+table.piano-roll td:first-child {
+  color: #222;
+  font-weight: 500;
+}
+table.piano-roll td:first-child.sharp {
+  color: #666;
+}
+table.piano-roll td.note {
+  background: rgb(66, 66, 66);
+  border-radius: 4px;
+}
+
+/*# sourceMappingURL=styles.css.map */

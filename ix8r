@@ -38,5 +38,8 @@ function enter() {
         entry.default(entryName, argv)
     } catch(e) {
         console.log("Couldn't enter ix8r.")
+        if (argv.debug || argv.D) {
+            console.log(e)
+        }
     }
 }

@@ -1,4 +1,5 @@
 import { getPatternItemAt, getPatternLength, PatternItem } from ".";
+import { lerp } from "../util/math";
 
 export function simplify<T extends PatternItem>(items: T[], unit: number) {
     const length = getPatternLength(items)
@@ -44,4 +45,17 @@ export function chop<T extends PatternItem>(items: T[], unit: number) {
     }
 
     return out as T[]
+}
+
+export function articulate<T extends PatternItem>(items: T[], strength: number, quantize = false) {
+    return items.map(
+        item => {
+            const length = item.length * lerp(Math.random(), 1 - strength, 1)
+            
+            return {
+                ...item,
+                length: quantize ? Math.round(length) : length
+            }
+        }
+    ) as T[]
 }

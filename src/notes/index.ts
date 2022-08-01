@@ -34,6 +34,10 @@ export function shiftNote(note: Note, semitones: number) {
     return notes[shift]
 }
 
+export function shiftOctave(note: Note | NoteOctave, octaves: number) {
+    return `${getNote(note)}${getOctave(note) + octaves}` as NoteOctave
+}
+
 export function shiftNoteOctave(noteoct: NoteOctave, semitones: number) {
     const note = getNote(noteoct)
     const octaveShift = Math.floor((notes.indexOf(note) + semitones) / notes.length)
@@ -158,6 +162,8 @@ type PatternItemBase = {
     length: number
 }
 
+export type PatternType = "note" | "chord"
+
 export type PatternNoteItem = {
     type: "note",
     note: Note | NoteOctave
@@ -206,6 +212,20 @@ export function getPatternOctaveSpan(items: PatternNoteItem[]) {
     }
 
     return {min, max}
+}
+
+export function getPatternItemAt<T extends PatternItem>(items: T[], time: number) {
+    for (let item of items) {
+        if (item.start <= time && item.length > time - item.start) {
+            return item
+        }
+    }
+
+    return null
+}
+
+export function isPatternMonoTyped(items: PatternItem[], type: PatternType) {
+    return items.filter(item => item.type === type).length === items.length
 }
 
 export type NoteGroups = {

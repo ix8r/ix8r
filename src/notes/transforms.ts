@@ -1,5 +1,6 @@
 import { getPatternItemAt, getPatternLength, NoteOctave, PatternItem, PatternNoteItem, shiftOctave, unpackChord } from ".";
 import { lerp } from "../util/math";
+import { nextRng } from "../util/rng";
 
 export function simplify<T extends PatternItem>(items: T[], unit: number) {
     const length = getPatternLength(items)
@@ -50,7 +51,7 @@ export function chop<T extends PatternItem>(items: T[], unit: number) {
 export function articulate<T extends PatternItem>(items: T[], strength: number, quantize = false) {
     return items.map(
         item => {
-            const length = item.length * lerp(Math.random(), 1 - strength, 1)
+            const length = item.length * lerp(nextRng(), 1 - strength, 1)
             
             return {
                 ...item,

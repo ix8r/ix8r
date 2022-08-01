@@ -118,3 +118,42 @@ export function arpeggiate<T extends PatternItem>(
         }
     )
 }
+
+export function trim<T extends PatternItem>(items: T[], length: number) {
+    const out: T[] = []
+
+    for (const item of items) {
+        if (item.start >= length) {
+            continue
+        }
+
+        out.push({
+            ...item,
+            length: Math.min(length - item.start, item.length)
+        })
+    }
+
+    return out
+}
+
+export function delay<T extends PatternItem>(items: T[], delay: number) {
+    return items.map(item => ({
+        ...item,
+        start: item.start + delay
+    })) as T[]
+}
+
+export function stutter<T extends PatternItem>(items: T[], unit: number) {
+    const length = getPatternLength(items)
+    const repeats = Math.ceil(length / unit)
+
+    return Array(repeats).fill(0).map(
+        (_, i) => {
+            const time = unit * i
+
+            return delay(
+                trim(items, Math.min(length - time, unit)), time
+            )
+        }
+    ).flat() as T[]
+}

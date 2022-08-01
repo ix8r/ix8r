@@ -14,6 +14,9 @@ export default function getData(path: string) {
     }
 
     if (!existsSync(filePath)) {
+        console.log(`Data file not found: ${path}`)
+        process.exit(1)
+
         return null
     }
 

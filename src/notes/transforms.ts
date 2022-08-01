@@ -1,4 +1,4 @@
-import { getPatternItemAt, getPatternLength, PatternItem } from ".";
+import { getPatternItemAt, getPatternLength, NoteOctave, PatternItem, PatternNoteItem, shiftOctave, unpackChord } from ".";
 import { lerp } from "../util/math";
 
 export function simplify<T extends PatternItem>(items: T[], unit: number) {
@@ -7,7 +7,7 @@ export function simplify<T extends PatternItem>(items: T[], unit: number) {
 
     return Array(steps).fill(0).map(
         (_, i) => {
-            const time = unit * i
+            const time: number = unit * i
 
             return {
                 ...getPatternItemAt(items, time),
@@ -58,4 +58,63 @@ export function articulate<T extends PatternItem>(items: T[], strength: number, 
             }
         }
     ) as T[]
+}
+
+export type ArpeggiationMovement = "up" | "down" | "updown"
+
+function getArpNote(notes: NoteOctave[], time: number, movement: ArpeggiationMovement) {
+    let index = 0
+
+    if (movement === "up") {
+        index = time % notes.length
+    } else if (movement === "down") {
+        index = (notes.length - 1) - (time % notes.length)
+    } else if (movement === "updown") {
+        const modIndex = time % (2 * notes.length - 2)
+
+        if (modIndex >= notes.length) {
+            index = (notes.length - 1) - ((modIndex - notes.length + 1) % notes.length)
+        } else {
+            index = modIndex
+        }
+    }
+
+    return notes[index]
+}
+
+function getArpPeriod(notes: NoteOctave[], movement: ArpeggiationMovement) {
+    if (movement === "updown") {
+        return 2 * notes.length - 2
+    }
+
+    return notes.length
+}
+
+export function arpeggiate<T extends PatternItem>(
+    items: T[],
+    unit: number, movement: ArpeggiationMovement, octaves = 1
+): PatternNoteItem[] {
+    return chop(items, unit).map(
+        item => {
+            const original = getPatternItemAt(items, item.start)!
+            if (original.type === "note") {
+                return item as PatternNoteItem
+            }
+
+            const arpTime = Math.ceil((item.start - original.start) / unit)
+
+            const notes = unpackChord(original.chord)!
+            const note = shiftOctave(
+                getArpNote(notes, arpTime, movement),
+                Math.floor(arpTime / getArpPeriod(notes, movement)) % octaves
+            )
+
+            return {
+                type: "note",
+                note,
+                start: item.start,
+                length: item.length
+            } as PatternNoteItem
+        }
+    )
 }

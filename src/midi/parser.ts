@@ -81,8 +81,8 @@ function collectChords(data: MidiSimpleData) {
 
 function finalizeChords(chords: RawChord[]): PatternItem[] {
     return chords.map(chord => ({
-        start: chord.start,
-        length: chord.length,
+        start: chord.start * 4,
+        length: chord.length * 4,
         type: "chord",
         chord: processMidiChord(chord.notes)!
     }))

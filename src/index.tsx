@@ -3,6 +3,7 @@ import getData from "./data"
 import { convertMidiToChords } from "./midi/parser"
 import { unpackPattern } from "./notes"
 import { defineEntry, enter } from "./util/entry"
+import { setSeed } from "./util/rng"
 import startViz from "./viz"
 import { PianoRoll } from "./viz/components/pianoRoll"
 import { createVizElement } from "./viz/jsx"
@@ -27,5 +28,9 @@ defineEntry("midi_parse", (argv) => {
 })
 
 export default function ix8r(entry: string, argv: any) {
+    if (argv.seed) {
+        setSeed(argv.seed)
+    }
+
     enter(entry, argv)
 }

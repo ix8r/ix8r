@@ -1,4 +1,6 @@
 import { MidiData } from "midi-file"
+import { processTemplate } from "./arranger/structure"
+import { StructureFile } from "./arranger/structure/types"
 import getData from "./data"
 import { convertMidiToChords } from "./midi/parser"
 import { unpackPattern } from "./notes"
@@ -25,6 +27,15 @@ defineEntry("midi_parse", (argv) => {
     if (argv.viz) {
         startViz(<PianoRoll pattern={unpackPattern(pattern)}/>)
     }
+})
+
+defineEntry("arranger_structure", (argv) => {
+    const name = argv.structure ?? "versechorus"
+
+    const template = getData(`arranger/structure/${name}.json`) as StructureFile
+    
+    const structure = processTemplate(template)
+    console.log(structure)
 })
 
 export default function ix8r(entry: string, argv: any) {

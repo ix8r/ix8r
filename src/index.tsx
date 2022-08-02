@@ -8,6 +8,7 @@ import { unpackPattern } from "./notes"
 import { defineEntry, enter } from "./util/entry"
 import { setSeed } from "./util/rng"
 import startViz from "./viz"
+import { ArrangementRoll } from "./viz/components/arrangementRoll"
 import { PianoRoll } from "./viz/components/pianoRoll"
 import { createVizElement } from "./viz/jsx"
 
@@ -46,6 +47,10 @@ defineEntry("arranger", (argv) => {
     
     const arrangement = createArrangement(template)
     console.log(JSON.stringify(arrangement, null, 4))
+
+    if (argv.viz) {
+        startViz(<ArrangementRoll arrangement={arrangement}/>)
+    }
 })
 
 export default function ix8r(entry: string, argv: any) {

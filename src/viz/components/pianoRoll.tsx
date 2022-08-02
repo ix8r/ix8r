@@ -43,8 +43,10 @@ export function PianoRoll(props: {
 
     return <table class="piano-roll">
         <thead>
-            <th></th>
-            <PianoRollTimeline length={length} />
+            <tr>
+                <th></th>
+                <PianoRollTimeline length={length} />
+            </tr>
         </thead>
         <tbody>
             {

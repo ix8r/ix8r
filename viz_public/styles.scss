@@ -4,10 +4,8 @@ body {
     font-family: "Inter";
 }
 
-table.piano-roll {
+table {
     background: #e4e4e4;
-
-    font-size: 10pt;
 
     border: 1px solid #ccc;
     border-collapse: collapse;
@@ -28,6 +26,10 @@ table.piano-roll {
     tbody {
         background: #f7f7f7;
     }
+}
+
+table.piano-roll {
+    font-size: 10pt;
 
     td:first-child {
         color: #222;
@@ -40,5 +42,38 @@ table.piano-roll {
 
     td.note {
         background: rgb(66, 66, 66);
+    }
+}
+
+table.arrangement {
+    td, th {
+        min-width: 32px;
+    }
+
+    td {
+        padding: 6px 8px;
+    }
+
+    td.pattern {
+        color: #fff;
+
+        font-weight: 500;
+        text-align: center;
+
+        &.pattern-0 {
+            background: rgb(95, 95, 95);
+        }
+
+        &.pattern-1 {
+            background: rgb(66, 66, 66);
+        }
+
+        &.pattern-2 {
+            background: rgb(44, 44, 44);
+        }
+
+        &.pattern-3 {
+            background: rgb(27, 27, 27);
+        }
     }
 }

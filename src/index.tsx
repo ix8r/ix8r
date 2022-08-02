@@ -1,4 +1,5 @@
 import { MidiData } from "midi-file"
+import { createArrangement } from "./arranger"
 import { processTemplate } from "./arranger/structure"
 import { StructureFile } from "./arranger/structure/types"
 import getData from "./data"
@@ -36,6 +37,15 @@ defineEntry("arranger_structure", (argv) => {
     
     const structure = processTemplate(template)
     console.log(structure)
+})
+
+defineEntry("arranger", (argv) => {
+    const name = argv.structure ?? "versechorus"
+
+    const template = getData(`arranger/structure/${name}.json`) as StructureFile
+    
+    const arrangement = createArrangement(template)
+    console.log(JSON.stringify(arrangement, null, 4))
 })
 
 export default function ix8r(entry: string, argv: any) {

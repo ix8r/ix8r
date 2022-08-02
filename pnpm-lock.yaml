@@ -9,12 +9,14 @@ specifiers:
   midi-file: ^1.2.3
   seedrandom: ^3.0.5
   typescript: ^4.7.4
+  weighted: ^1.0.0
   yargs: ^17.5.1
 
 dependencies:
   express: 4.18.1
   midi-file: 1.2.3
   seedrandom: 3.0.5
+  weighted: 1.0.0
   yargs: 17.5.1
 
 devDependencies:
@@ -576,6 +578,10 @@ packages:
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: false
+
+  /weighted/1.0.0:
+    resolution: {integrity: sha512-d0actwV3zgtH73koFWida36KVz+hM1XaumMBTQI6ozr9zUgHiB4dWM+2wWcXe6cniyLW0iMBthuPN6XtSpPMVw==}
     dev: false
 
   /wrap-ansi/7.0.0:

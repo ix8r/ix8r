@@ -1,8 +1,9 @@
+import { nextRng } from "../../util/rng"
 import { StructureBlock, StructureFile, StructureFileBlock, StructureFileLengthRange, StructureTransitionBlock } from "./types"
 
 function rollLength(lengthRange: StructureFileLengthRange): number {
     return Math.floor(
-        Math.random() * (lengthRange.max - lengthRange.min + 1)
+        nextRng() * (lengthRange.max - lengthRange.min + 1)
     ) + lengthRange.min
 }
 
@@ -22,7 +23,7 @@ function processBlock(
     block: StructureFileBlock, lengths: { [key: string]: number },
     skipOptional?: boolean
 ): StructureTransitionBlock[] {
-    if (block.optional && Math.random() >= 0.5 && !skipOptional) {
+    if (block.optional && nextRng() >= 0.5 && !skipOptional) {
         return []
     }
 
@@ -47,7 +48,7 @@ function processBlock(
         const blockOptionality: boolean[] = Array(block.blocks.length).fill(true)
         block.blocks.forEach((block, j) => {
             if (block.optional) {
-                blockOptionality[j] = Math.random() >= 0.5
+                blockOptionality[j] = nextRng() >= 0.5
             }
         })
 
